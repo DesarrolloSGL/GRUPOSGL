@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.container {
+    display: block;
+    width: 100%;
+    background: #fff;
+    max-width: 350px;
+    padding: 25px;
+    margin: 50px auto 0;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.receipt_header {
+    padding-bottom: 40px;
+    border-bottom: 1px dashed #000;
+    text-align: center;
+}
+
+.receipt_header h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.receipt_header h1 span {
+    display: block;
+    font-size: 25px;
+}
+
+.receipt_header h2 {
+    font-size: 14px;
+    color: #727070;
+    font-weight: 300;
+}
+
+.receipt_header h2 span {
+    display: block;
+}
+
+.receipt_body {
+    margin-top: 25px;
+}
+
+table {
+    width: 100%;
+}
+
+thead, tfoot {
+    position: relative;
+}
+
+thead th:not(:last-child) {
+    text-align: left;
+}
+
+thead th:last-child {
+    text-align: right;
+}
+
+thead::after {
+    content: '';
+    width: 100%;
+    border-bottom: 1px dashed #000;
+    display: block;
+    position: absolute;
+}
+
+tbody td:not(:last-child), tfoot td:not(:last-child) {
+    text-align: left;
+}
+
+tbody td:last-child, tfoot td:last-child{
+    text-align: right;
+}
+
+tbody tr:first-child td {
+    padding-top: 15px;
+}
+
+tbody tr:last-child td {
+    padding-bottom: 15px;
+}
+
+tfoot tr:first-child td {
+    padding-top: 15px;
+}
+
+tfoot::before {
+    content: '';
+    width: 100%;
+    border-top: 1px dashed #000;
+    display: block;
+    position: absolute;
+}
+
+tfoot tr:last-child td:last-child, tfoot tr:last-child td:first-child {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.date_time_con {
+    display: flex;
+    justify-content: center;
+    column-gap: 25px;
+}
+
+.items {
+    margin-top: 25px;
+}
+
+h3 {
+    border-top: 1px dashed #000;
+    padding-top: 10px;
+    margin-top: 25px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+/* CSS */
+.button-confirmation-payment{
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 44px;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.button-confirmation-payment:disabled {
+  cursor: default;
+}
+
+.button-9:focus {
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}

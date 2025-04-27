@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.title-font{
+    font-family:'Martel Sans', sans-serif;
+    font-weight: 700;
+}
+.normal-font{
+    font-family:'Martel Sans', sans-serif;
+    font-weight: 400;
+}
+
+.global-font{
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    font-family: 'Poppins', sans-serif;
+    /* font-family:'Martel Sans', sans-serif; */
+    /* font-family: Tahoma, sans-serif; */
+    /* font-weight: 300; */
+}
+
+.animate-pulse{
+    animation-name: animate-color;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+
+
+@keyframes animate-color {
+    0% {
+        color: rgb(195, 195, 195);
+    }
+    100% {
+    color: rgb(3, 255, 24);
+    }
+}
+
+.status-animate-red{
+    animation-name: animate-color-red;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+
+
+@keyframes animate-color-red {
+    0% {
+        fill: rgb(255, 186, 186);
+    }
+    100% {
+        fill: rgb(255, 59, 59);
+    }
+}
+
+
+.animate-ping-slow{
+    animation: ping-once 5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping-once {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ScroolBar */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: gray;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(103, 102, 102);
+  }
