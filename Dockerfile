@@ -1,8 +1,5 @@
-# --- Etapa de Builder ---
-# CAMBIO: Usamos una imagen oficial con PHP 8.2 y le instalamos Composer
+# --- Etapa de Builder (Esta etapa no cambia) ---
 FROM php:8.2-cli as builder
-
-# Instalamos dependencias del sistema y Composer
 RUN apt-get update && apt-get install -y unzip libzip-dev && \
     EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')" && \
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -10,27 +7,36 @@ RUN apt-get update && apt-get install -y unzip libzip-dev && \
     if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then >&2 echo 'ERROR: Invalid installer checksum'; exit 1; fi && \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
     php -r "unlink('composer-setup.php');"
-
 WORKDIR /app
 COPY database/ database/
 COPY composer.json composer.lock ./
 RUN composer install --no-interaction --no-plugins --no-scripts --prefer-dist --no-dev --optimize-autoloader
 
+# --- Etapa Final de Producción (Grandes cambios aquí) ---
+# Usamos la imagen oficial de PHP 8.2 FPM, basada en Debian
+FROM php:8.2-fpm
 
-# --- Etapa Final de Producción ---
-# CAMBIO: Usamos la imagen de Nginx/PHP-FPM que está etiquetada específicamente para PHP 8.2
-FROM richarvey/nginx-php-fpm:php82
+# Instalamos Nginx, Supervisor y dependencias de PHP
+RUN apt-get update && apt-get install -y nginx supervisor libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql zip
 
+# Creamos el directorio de trabajo
 WORKDIR /var/www/html
-COPY --from=builder /app/vendor/ /var/www/html/vendor/
+
+# Copiamos los archivos de la aplicación y las dependencias
 COPY . .
+COPY --from=builder /app/vendor/ ./vendor
 
-# Le decimos a Nginx que la carpeta raíz del sitio es /public
-ENV WEBROOT /var/www/html/public
+# Copiamos los archivos de configuración que creamos
+COPY nginx.conf /etc/nginx/sites-available/default
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Asignamos los permisos correctos
-RUN chown -R nginx:nginx /var/www/html/storage /var/www/html/bootstrap/cache && \
+# Asignamos permisos al usuario www-data (usuario de PHP-FPM y Nginx en esta imagen)
+RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Exponemos el puerto 80
+# Exponemos el puerto
 EXPOSE 80
+
+# Comando final para iniciar el supervisor, que a su vez inicia Nginx y PHP-FPM
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
